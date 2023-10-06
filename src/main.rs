@@ -18,20 +18,19 @@ async fn main() {
         .await
         .expect("Ok")
         .expect("Some");
-
     dbg!(&a);
 
+    // Below returns nothing because it thinks time is not a datetime
     let is_datetime = client
         .query("SELECT * FROM table:a WHERE type::is::datetime(time)")
         .await
         .unwrap();
-
     dbg!(is_datetime);
 
+    // Below returns something because it thinks time is *not* a datetime
     let is_not_datetime = client
         .query("SELECT * FROM table:a WHERE !type::is::datetime(time)")
         .await
         .unwrap();
-
     dbg!(is_not_datetime);
 }
